@@ -1,4 +1,4 @@
-import { number } from "prop-types";
+import { array, number } from "prop-types";
 import { DiAtlassian } from "react-icons/di";
 
 const getState = ({ getStore, getActions, setStore }) => {
@@ -12,6 +12,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       spinner: null,
 
       listPeople: [],
+
+      listAnyThings: [],
+
+      listDetailsPeople: [],
 
       favorite: [],
     },
@@ -28,12 +32,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (resListPeople.ok) {
             const dataListPeople = await resListPeople.json();
-
-           console.log(dataListPeople)
+            
 
             setStore({ ...storeCurrent, listPeople: dataListPeople.results });
-            setStore( {...storeCurrent, pageTotal: dataListPeople.total_pages} )
+
+            /* const arrayPeople = []
+
+            dataListPeople.results.forEach( async (elements) => {
+              let resArray = await fetch(elements.url)
+              if(!resArray.ok) return
+              let dataArray = await resArray.json()
+              arrayPeople.push(dataArray)
+            } )
+            setStore({ ...storeCurrent, listPeople: arrayPeople });
+            console.log(arrayPeople) */
             
+
  
           }else{
             alert('Ha ocurrido un error')
@@ -69,6 +83,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      //FUNCION PARA OBTENER PREVIOUS PERSONAJES
       getPreviousPeople: async () => {
         const storePrevious = getStore()
         getActions().spinner(true)
@@ -89,6 +104,28 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      //FUNCION PARA OBTENER LA DATA DE CADA PERSONAJE
+      getDetail: async (url)=>{
+        const store = getStore()
+        getActions().spinner(true)
+        try{
+          const resListDetailsPeople = await fetch(url)
+          const dataListDetailsPeople = await resListDetailsPeople.json()
+          setStore( {...store, listDetailsPeople: dataListDetailsPeople.result.properties} )
+          
+          console.log(dataListDetailsPeople)
+            /* setStore({ ...storeCurrent, listPeople: dataListPeople.results }); */
+            
+
+          
+        }catch(err){
+          alert('Ha ocurrido un erro: ', err)
+        }finally{
+          getActions().spinner(false)
+        }
+      },
+
+      //  GUARDA LOS PERSONAJES "ME GUSTA"
       addFavorite: (name)=>{
         const strAdd = getStore()
         const { favorite } = strAdd
@@ -97,16 +134,19 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore( { favorite: updatedFavorites } )
       },
 
+      //FUNCION DE SPINNER PARA MOSTRA 'CARGANDO'
       spinner: (boolean) => {
         setStore({ spinner: boolean });
       },
 
+      //FUNCION PARA SUMA LA VARIABLE PAGE
       sumUrlPage: (number)=>{
         const storeSum = getStore()
         const newNumber = storeSum.page + number
         setStore( { page: newNumber } )
       }, 
       
+      //FUNCION PARA RESTAR LA VARIABLE PAGE
       restaUrlPage: (number)=>{
         const storeResta = getStore()
         const newNumber2 = storeResta.page - number

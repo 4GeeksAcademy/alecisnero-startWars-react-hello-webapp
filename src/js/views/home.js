@@ -7,9 +7,9 @@ import CardPeople from '../component/CardPeople.jsx'
 export const Home = () => {
     const { store, actions } = useContext(Context)
 
-    console.log(store.listPeople)
+    
     return(
-        <div>
+        <div className='container'>
 			<h2 className='text-danger'>Characters</h2>
            <CardPeople />
         </div>
