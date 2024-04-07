@@ -10,7 +10,6 @@ export const Home = () => {
     
     return(
         <div className='container'>
-			<h2 className='text-danger'>Characters</h2>
            <CardPeople />
         </div>
     )

@@ -4,7 +4,6 @@ import { Context } from '../store/appContext'
 export const DetailsCardPeople = () => {
     const { store, actions } = useContext(Context)
 
-    /* console.log(store.listDetailsPeople) */
 
     return (!store.spinner) ? (
 

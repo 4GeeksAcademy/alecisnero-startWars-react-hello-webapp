@@ -1,4 +1,4 @@
-import { array, number } from "prop-types";
+import { array, element, number } from "prop-types";
 import { DiAtlassian } from "react-icons/di";
 
 const getState = ({ getStore, getActions, setStore }) => {
@@ -6,10 +6,10 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
 
       page: 1,
-
-      url: `https://www.swapi.tech/api/people?page=1&limit=10`,
       
       spinner: null,
+
+      spinner2: true,
 
       listPeople: [],
 
@@ -28,27 +28,33 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore( {...storeCurrent, listPeople: []} )
 
         try {
-          const resListPeople = await fetch(storeCurrent.url);
+          const resListPeople = await fetch(`https://www.swapi.tech/api/people?page=${storeCurrent.page}&limit=10`);
 
           if (resListPeople.ok) {
             const dataListPeople = await resListPeople.json();
-            
+            console.log(dataListPeople.results)
 
             setStore({ ...storeCurrent, listPeople: dataListPeople.results });
 
-            /* const arrayPeople = []
+            //PRUEBAS
+            getActions().spinner2(false)
+            const arrayPeoplePromises = dataListPeople.results.map(async (element) => {
+              const resArray = await fetch(element.url);
+              if (resArray.ok) {
+                const dataArray = await resArray.json();
+                return dataArray;
+              }
+            });
+          
+            const arrayPeople = await Promise.all(arrayPeoplePromises);
+            console.log(arrayPeople);
+          
+            const array2Promise = arrayPeople.map( (ele)=>ele.result.properties) 
 
-            dataListPeople.results.forEach( async (elements) => {
-              let resArray = await fetch(elements.url)
-              if(!resArray.ok) return
-              let dataArray = await resArray.json()
-              arrayPeople.push(dataArray)
-            } )
-            setStore({ ...storeCurrent, listPeople: arrayPeople });
-            console.log(arrayPeople) */
+            const arrayPeople2 = await Promise.all(array2Promise)
+            setStore( {...storeCurrent, listAnyThings: arrayPeople2} )
+            console.log(arrayPeople2, storeCurrent.listAnyThings);
             
-
- 
           }else{
             alert('Ha ocurrido un error')
           }
@@ -58,6 +64,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           alert("Se ha presentado un ERROR: ", error);
         } finally {
           getActions().spinner(false);
+          getActions().spinner2(true)
         }
       },
 
@@ -66,6 +73,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const store = getStore()
         getActions().spinner(true);
         getActions().sumUrlPage(1)
+        getActions().getListPeople()
         setStore( {...store, listPeople: []} )
         console.log(store.page)
 
@@ -88,6 +96,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const storePrevious = getStore()
         getActions().spinner(true)
         getActions().restaUrlPage(storePrevious.page)
+        getActions().getListPeople()
         setStore( {...storePrevious, listPeople: []} )
         console.log(storePrevious.page)
 
@@ -133,10 +142,26 @@ const getState = ({ getStore, getActions, setStore }) => {
         
         setStore( { favorite: updatedFavorites } )
       },
+      deleteFavorite: (index) => {
+        const store = getStore()
+        const newFavorite = store.favorite.filter( (ele, indexCurrent)=> {
+          return indexCurrent !== index
+        } )
+
+        store.favorite = newFavorite 
+        console.log(store.favorite)
+      },
 
       //FUNCION DE SPINNER PARA MOSTRA 'CARGANDO'
       spinner: (boolean) => {
-        setStore({ spinner: boolean });
+        const store = getStore()
+        setStore({ ...store, spinner: boolean });
+      },
+
+      //SEGUNDO SPINNER ROJO
+      spinner2: (boolean2) => {
+        const store = getStore()
+        setStore({ ...store, spinner2: boolean2})
       },
 
       //FUNCION PARA SUMA LA VARIABLE PAGE

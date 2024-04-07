@@ -2,10 +2,12 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { Context } from '../store/appContext'
 import { FaRegHeart } from "react-icons/fa6";
+import Description from './Description.jsx';
 
 const CardPeople = () => {
     const { store, actions } = useContext(Context)
     const navigate = useNavigate()
+
     useEffect(() => {
         actions.getListPeople()
     }, [])
@@ -21,26 +23,18 @@ const CardPeople = () => {
         }
     }
 
-    console.log(store.listPeople)
 
-    return (
-        <div className='text-center'>
 
-            <div>
-                {store.spinner && <div>
-                    <div className="spinner-border text-warning" role="status">
-                        <span className="visually-hidden">Loading...</span>
-
-                    </div>
-                    <p className='text-warning'>Cargando, por favor espere...</p>
-                </div>}
-            </div>
-
+    return (!store.spinner) ? (
+        <div
+            className='p-3 rounded'
+            style={{ backgroundColor: 'rgb(25, 25, 25)' }}>
+            <h2 className='text-danger text-start mb-3'>Characters</h2>
             <div className='d-flex' style={{ overflow: "auto" }}>
-              
+
                 {store.listPeople.map((element, index) => {
                     return (
-                        <div key={index} className='card col-6 me-3'>
+                        <div key={index} className='card col-xxl-3 col-xl-3 col-lg-4 col-md-5 col-sm-12 me-3'>
                             <div >
                                 <img src='https://t3.ftcdn.net/jpg/02/98/94/38/360_F_298943877_A4W7tVyZPCu6gNGuGXJUerZbXsWmblLb.jpg'
                                     className='card-img-top'
@@ -48,9 +42,9 @@ const CardPeople = () => {
                             </div>
                             <div className='card-body'>
                                 <h5>{element.name}</h5>
-                                {/* <p>Gender: {element.result.properties.gender}</p>
-                                <p>Hair Color: {element.result.properties.hair_color}</p>
-                                <p>Eye-Color: {element.result.properties.eye_color}</p> */}
+
+                                <Description name={element.name} />
+
                                 <div className='d-flex justify-content-between'>
 
                                     <button className='btn btn-outline-primary'
@@ -68,15 +62,21 @@ const CardPeople = () => {
                 })}
             </div>
 
+            <div className='text-center'>
+                <button className='btn btn-outline-light mt-3 me-3' onClick={() => { actions.getPreviousPeople() }}>Previous</button>
 
+                <button className='btn btn-outline-light mt-3' onClick={() => { actions.getNextPeople() }}>Next</button>
+            </div>
+        </div>
+    ) : (
+        <div className='text-center'>
+            {store.spinner && <div>
+                <div className="spinner-border text-warning" role="status">
+                    <span className="visually-hidden">Loading...</span>
 
-
-            <button className='btn btn-outline-light mt-5 me-3' onClick={() => { actions.getPreviousPeople() }}>Previous</button>
-
-            {/*  <button className='btn btn-light mt-5 me-3'
-                onClick={() => {  }}>Get Data</button> */}
-
-            <button className='btn btn-outline-light mt-5' onClick={() => { actions.getNextPeople() }}>Next</button>
+                </div>
+                <p className='text-warning'>Cargando, por favor espere...</p>
+            </div>}
         </div>
     )
 }

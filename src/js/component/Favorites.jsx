@@ -4,6 +4,8 @@ import { TiDeleteOutline } from "react-icons/ti";
 
 const Favorites = () => {
     const { store, actions } = useContext(Context)
+
+    
     return (
         <div>
             <ul className="dropdown-menu dropdown-menu-end">
@@ -17,7 +19,7 @@ const Favorites = () => {
                                         <div className='d-flex justify-content-between'>
                                             <div>{item}</div>
                                             <div>
-                                                <button className='btn btn-outline-secondary'>
+                                                <button onClick={ ()=>{actions.deleteFavorite(index)} } className='btn btn-outline-secondary'>
                                                     <TiDeleteOutline />
                                                 </button>
                                             </div>
