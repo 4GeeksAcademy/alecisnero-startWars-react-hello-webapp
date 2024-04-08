@@ -10,11 +10,11 @@ export const DetailsCardPeople = () => {
         <div className='text-white'>
             <div className='d-flex'>
                 <div >
-                    <img className='rounded' src="https://t3.ftcdn.net/jpg/02/98/94/38/360_F_298943877_A4W7tVyZPCu6gNGuGXJUerZbXsWmblLb.jpg" alt={`imagen_${store.listDetailsPeople.name}`} />
+                    <img className='rounded' src={`https://starwars-visualguide.com/assets/img/characters/${store.listDetailsPeople.uid}.jpg`} alt={`imagen_${store.listDetailsPeople.properties.name}`} />
                 </div>
                 <div>
                     <h1>
-                        {store.listDetailsPeople.name}
+                        {store.listDetailsPeople.properties.name}
                     </h1>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas unde, nemo dicta blanditiis illo vitae veritatis expedita laudantium voluptates reiciendis tempore molestiae ratione repudiandae cum explicabo aperiam voluptate vel accusantium.
@@ -43,22 +43,22 @@ export const DetailsCardPeople = () => {
             </div>
             <div className='row'>
                 <div className='col-2'>
-                    <p>{store.listDetailsPeople.name}</p>
+                    <p>{store.listDetailsPeople.properties.name}</p>
                 </div>
                 <div className='col-2'>
-                    <p>{store.listDetailsPeople.birth_year}</p>
+                    <p>{store.listDetailsPeople.properties.birth_year}</p>
                 </div>
                 <div className='col-2'>
-                    <p>{store.listDetailsPeople.gender}</p>
+                    <p>{store.listDetailsPeople.properties.gender}</p>
                 </div>
                 <div className='col-2'>
-                    <p>{store.listDetailsPeople.height}</p>
+                    <p>{store.listDetailsPeople.properties.height}</p>
                 </div>
                 <div className='col-2'>
-                    <p>{store.listDetailsPeople.skin_color}</p>
+                    <p>{store.listDetailsPeople.properties.skin_color}</p>
                 </div>
                 <div className='col-2'>
-                    <p>{store.listDetailsPeople.eye_color}</p>
+                    <p>{store.listDetailsPeople.properties.eye_color}</p>
                 </div>
             </div>
         </div>

@@ -7,7 +7,7 @@ const Description = ({ name }) => {
 
     return (store.spinner2) ? (
         <div>
-            {store.listAnyThings.map((ele, idx) =>
+            {store.listAnyThingsPeople.map((ele, idx) =>
                 (name === ele.name) ? (
                     <div key={idx}>
                         <p>Gender: {ele.gender}</p>

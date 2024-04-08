@@ -12,8 +12,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       spinner2: true,
 
       listPeople: [],
+      listPlanets: [],
 
-      listAnyThings: [],
+      listAnyThingsPeople: [],
+      listAnyThingsPlanets: [],
 
       listDetailsPeople: [],
 
@@ -32,7 +34,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (resListPeople.ok) {
             const dataListPeople = await resListPeople.json();
-            console.log(dataListPeople.results)
 
             setStore({ ...storeCurrent, listPeople: dataListPeople.results });
 
@@ -47,13 +48,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             });
           
             const arrayPeople = await Promise.all(arrayPeoplePromises);
-            console.log(arrayPeople);
           
             const array2Promise = arrayPeople.map( (ele)=>ele.result.properties) 
 
             const arrayPeople2 = await Promise.all(array2Promise)
-            setStore( {...storeCurrent, listAnyThings: arrayPeople2} )
-            console.log(arrayPeople2, storeCurrent.listAnyThings);
+            setStore( {...storeCurrent, listAnyThingsPeople: arrayPeople2} )
             
           }else{
             alert('Ha ocurrido un error')
@@ -67,6 +66,53 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().spinner2(true)
         }
       },
+      
+      getListPlanets: async () => {
+        getActions().spinner(true);
+        const storePlanets = getStore();
+        
+        setStore( {...storePlanets, listPlanets: [] } )
+
+        try {
+          const resListPlanets = await fetch(`https://www.swapi.tech/api/planets?page=${storePlanets.page}&limit=10`);
+
+          if (resListPlanets.ok) {
+            const dataListPlanets = await resListPlanets.json();
+
+            setStore({ ...storePlanets, listPlanets: dataListPlanets.results });
+            dataListPlanets.results
+
+            //PRUEBAS
+            getActions().spinner2(false)
+            const arrayPlanetsPromises = dataListPlanets.results.map(async (element) => {
+              const resArray = await fetch(element.url);
+              if (resArray.ok) {
+                const dataArray = await resArray.json();
+                return dataArray;
+              }
+            });
+          
+            const arrayPlanets = await Promise.all(arrayPlanetsPromises);
+          
+            const array2Promise = arrayPlanets.map( (ele)=>ele.result.properties) 
+
+            const arrayPlanets2 = await Promise.all(array2Promise)
+            setStore( {...storePlanets, listAnyThingsPlanets: arrayPlanets2} )
+            
+          }else{
+            alert('Ha ocurrido un error')
+          }
+
+        } catch (error) {
+          console.error("Se ha presentado un ERROR: ", error);
+          alert("Se ha presentado un ERROR: ", error);
+        } finally {
+          getActions().spinner(false);
+          getActions().spinner2(true)
+        }
+      }
+      
+      ,
 
       //FUNCION PARA OBTENER SIGUIENTES PERSONAJES
       getNextPeople: async () => {
@@ -98,7 +144,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         getActions().restaUrlPage(storePrevious.page)
         getActions().getListPeople()
         setStore( {...storePrevious, listPeople: []} )
-        console.log(storePrevious.page)
 
         try{
 
@@ -120,7 +165,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         try{
           const resListDetailsPeople = await fetch(url)
           const dataListDetailsPeople = await resListDetailsPeople.json()
-          setStore( {...store, listDetailsPeople: dataListDetailsPeople.result.properties} )
+          setStore( {...store, listDetailsPeople: dataListDetailsPeople.result} )
           
           console.log(dataListDetailsPeople)
             /* setStore({ ...storeCurrent, listPeople: dataListPeople.results }); */
@@ -167,14 +212,16 @@ const getState = ({ getStore, getActions, setStore }) => {
       //FUNCION PARA SUMA LA VARIABLE PAGE
       sumUrlPage: (number)=>{
         const storeSum = getStore()
-        const newNumber = storeSum.page + number
+        const newNumber = storeSum.page + 1
+        console.log("Nuevo número de página sumado:", newNumber)
         setStore( { page: newNumber } )
       }, 
       
       //FUNCION PARA RESTAR LA VARIABLE PAGE
       restaUrlPage: (number)=>{
         const storeResta = getStore()
-        const newNumber2 = storeResta.page - number
+        const newNumber2 = storeResta.page - 1
+        console.log("Nuevo número de página restado:", newNumber2)
         setStore( {page: newNumber2} )
       }
     },

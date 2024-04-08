@@ -4,12 +4,12 @@ import { Context } from '../store/appContext'
 import { FaRegHeart } from "react-icons/fa6";
 import Description from './Description.jsx';
 
-const CardPeople = () => {
+const CardPlanets = () => {
     const { store, actions } = useContext(Context)
     const navigate = useNavigate()
 
     useEffect(() => {
-        actions.getListPeople()
+        actions.getListPlanets()
     }, [])
 
     //FUNCION HANDLER PARA GUARDAR LA URL
@@ -29,14 +29,14 @@ const CardPeople = () => {
         <div
             className='p-3 rounded'
             style={{ backgroundColor: 'rgb(25, 25, 25)' }}>
-            <h2 className='text-danger text-start mb-3'>Characters</h2>
+            <h2 className='text-danger text-start mb-3'>Planets</h2>
             <div className='d-flex' style={{ overflow: "auto" }}>
 
-                {store.listPeople.map((element, index) => {
+                {store.listPlanets.map((element, index) => {
                     return (
                         <div key={index} className='card col-xxl-3 col-xl-3 col-lg-4 col-md-5 col-sm-12 me-3'>
                             <div >
-                                <img src={`https://starwars-visualguide.com/assets/img/characters/${element.uid}.jpg`}
+                                <img src={`https://starwars-visualguide.com/assets/img/planets/${element.uid}.jpg`}
                                     className='card-img-top'
                                 />
                             </div>
@@ -81,4 +81,4 @@ const CardPeople = () => {
     )
 }
 
-export default CardPeople
+export default CardPlanets
