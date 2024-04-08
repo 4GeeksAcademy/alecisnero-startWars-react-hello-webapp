@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Context } from '../store/appContext'
 
-const Description = ({ name }) => {
+const DescriptionPeople = ({ name }) => {
     const { store, actions } = useContext(Context)
 
 
@@ -31,4 +31,4 @@ const Description = ({ name }) => {
 
 }
 
-export default Description
+export default DescriptionPeople

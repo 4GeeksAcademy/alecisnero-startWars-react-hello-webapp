@@ -7,8 +7,7 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context)
   return (
     <nav
-      className="navbar navbar-dark mb-3 ms-3"
-      style={{ backgroundColor: "black" }}
+      className="navbar mb-3 ms-3"
     >
       <Link to="/">
         <img

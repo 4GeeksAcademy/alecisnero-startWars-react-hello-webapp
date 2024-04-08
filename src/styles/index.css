@@ -3,7 +3,40 @@
 */
 
 body{
-    height: 100vh;
-    background: black;/* url('https://static.videezy.com/system/resources/thumbnails/000/043/897/original/200206_01_Particle-star-fall-seamless-loop.jpg ') no-repeat center center/ cover; */
+    background-color: black;
+    height: 80vh;
 }
 
+* {
+    margin: 0;
+    padding: 0
+}
+
+.main{
+    width: 100%;
+    height: 100vh
+}
+
+#app{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    overflow-y: auto;
+}
+
+video {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+     
+}
+
+.footer{
+    position: relative;
+    top: 200px
+}
+
+.anchor:hover{
+    background-color: rgb(40, 40, 40);
+}

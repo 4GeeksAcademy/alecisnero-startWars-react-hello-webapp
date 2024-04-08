@@ -5,7 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
 
-      page: 1,
+      pagePeople: 1,
+      pagePlanets: 1,
       
       spinner: null,
 
@@ -18,6 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       listAnyThingsPlanets: [],
 
       listDetailsPeople: [],
+      listDetailsPlanets: [],
 
       favorite: [],
     },
@@ -30,7 +32,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore( {...storeCurrent, listPeople: []} )
 
         try {
-          const resListPeople = await fetch(`https://www.swapi.tech/api/people?page=${storeCurrent.page}&limit=10`);
+          const resListPeople = await fetch(`https://www.swapi.tech/api/people?page=${storeCurrent.pagePeople}&limit=10`);
 
           if (resListPeople.ok) {
             const dataListPeople = await resListPeople.json();
@@ -74,7 +76,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore( {...storePlanets, listPlanets: [] } )
 
         try {
-          const resListPlanets = await fetch(`https://www.swapi.tech/api/planets?page=${storePlanets.page}&limit=10`);
+          const resListPlanets = await fetch(`https://www.swapi.tech/api/planets?page=${storePlanets.pagePlanets}&limit=10`);
 
           if (resListPlanets.ok) {
             const dataListPlanets = await resListPlanets.json();
@@ -110,24 +112,42 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().spinner(false);
           getActions().spinner2(true)
         }
-      }
-      
-      ,
+      },
 
       //FUNCION PARA OBTENER SIGUIENTES PERSONAJES
       getNextPeople: async () => {
         const store = getStore()
         getActions().spinner(true);
-        getActions().sumUrlPage(1)
+        getActions().sumUrlPagePeople(store.pagePeople)
         getActions().getListPeople()
         setStore( {...store, listPeople: []} )
-        console.log(store.page)
 
 
         try{
-          const resNext = await fetch(`https://www.swapi.tech/api/people?page=${store.page}&limit=10`)
+          const resNext = await fetch(`https://www.swapi.tech/api/people?page=${store.pagePeople}&limit=10`)
           const dataNext = await resNext.json()
           setStore( {...store, listPeople: dataNext.results} )
+        
+
+        }catch(err){
+          alert('Se ha presentando un error: ', err)
+        }finally{
+          getActions().spinner(false);
+        }
+      },
+
+      getNextPlanets: async () => {
+        const store = getStore()
+        getActions().spinner(true);
+        getActions().sumUrlPagePlanets(store.pagePlanets)
+        getActions().getListPlanets()
+        setStore( {...store, listPlanets: []} )
+
+
+        try{
+          const resNext = await fetch(`https://www.swapi.tech/api/planets?page=${store.pagePlanets}&limit=10`)
+          const dataNext = await resNext.json()
+          setStore( {...store, listPlanets: dataNext.results} )
         
 
         }catch(err){
@@ -141,13 +161,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       getPreviousPeople: async () => {
         const storePrevious = getStore()
         getActions().spinner(true)
-        getActions().restaUrlPage(storePrevious.page)
+        getActions().restaUrlPagePeople(storePrevious.pagePeople)
         getActions().getListPeople()
         setStore( {...storePrevious, listPeople: []} )
 
         try{
 
-          const resPrevious = await fetch(`https://www.swapi.tech/api/people?page=${storePrevious.page}&limit=10`)
+          const resPrevious = await fetch(`https://www.swapi.tech/api/people?page=${storePrevious.pagePeople}&limit=10`)
           const dataPrevious = await resPrevious.json()
           setStore( {...storePrevious, listPeople: dataPrevious.results } )
 
@@ -157,21 +177,49 @@ const getState = ({ getStore, getActions, setStore }) => {
           getActions().spinner(false)
         }
       },
+      getPreviousPlanets: async () => {
+        const storePrevious = getStore()
+        getActions().spinner(true)
+        getActions().restaUrlPagePlanets(storePrevious.pagePlanets)
+        getActions().getListPlanets()
+        setStore( {...storePrevious, listPlanets: []} )
+
+        try{
+
+          const resPrevious = await fetch(`https://www.swapi.tech/api/planets?page=${storePrevious.pagePlanets}&limit=10`)
+          const dataPrevious = await resPrevious.json()
+          setStore( {...storePrevious, listPlanets: dataPrevious.results } )
+
+        }catch(err){
+          alert('Se ha presentado un error: ', err)
+        }finally{
+          getActions().spinner(false)
+        }
+      },
 
       //FUNCION PARA OBTENER LA DATA DE CADA PERSONAJE
-      getDetail: async (url)=>{
+      getDetailPeople: async (url)=>{
         const store = getStore()
         getActions().spinner(true)
         try{
           const resListDetailsPeople = await fetch(url)
           const dataListDetailsPeople = await resListDetailsPeople.json()
           setStore( {...store, listDetailsPeople: dataListDetailsPeople.result} )
-          
-          console.log(dataListDetailsPeople)
-            /* setStore({ ...storeCurrent, listPeople: dataListPeople.results }); */
-            
+        }catch(err){
+          alert('Ha ocurrido un erro: ', err)
+        }finally{
+          getActions().spinner(false)
+        }
+      },
 
-          
+      //FUNCION PARA OBTENER LA DATA DE CADA PERSONAJE
+      getDetailPlanets: async (url)=>{
+        const store = getStore()
+        getActions().spinner(true)
+        try{
+          const resListDetailsPlanets = await fetch(url)
+          const dataListDetailsPlanets = await resListDetailsPlanets.json()
+          setStore( {...store, listDetailsPlanets: dataListDetailsPlanets.result} )
         }catch(err){
           alert('Ha ocurrido un erro: ', err)
         }finally{
@@ -189,12 +237,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       deleteFavorite: (index) => {
         const store = getStore()
+        const {favCurrent} = store
         const newFavorite = store.favorite.filter( (ele, indexCurrent)=> {
           return indexCurrent !== index
         } )
 
-        store.favorite = newFavorite 
-        console.log(store.favorite)
+        store.favorite = newFavorite
+        setStore( {...favCurrent} )
       },
 
       //FUNCION DE SPINNER PARA MOSTRA 'CARGANDO'
@@ -210,20 +259,35 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       //FUNCION PARA SUMA LA VARIABLE PAGE
-      sumUrlPage: (number)=>{
+      sumUrlPagePeople: (numberPeople)=>{
         const storeSum = getStore()
-        const newNumber = storeSum.page + 1
+        const newNumber = storeSum.pagePeople + numberPeople
         console.log("Nuevo número de página sumado:", newNumber)
-        setStore( { page: newNumber } )
+        setStore( { pagePeople: newNumber } )
       }, 
       
       //FUNCION PARA RESTAR LA VARIABLE PAGE
-      restaUrlPage: (number)=>{
+      restaUrlPagePeople: (numberPeople)=>{
         const storeResta = getStore()
-        const newNumber2 = storeResta.page - 1
+        const newNumber2 = storeResta.pagePeople - numberPeople
         console.log("Nuevo número de página restado:", newNumber2)
-        setStore( {page: newNumber2} )
-      }
+        setStore( {pagePeople: newNumber2} )
+      },
+      //FUNCION PARA SUMA LA VARIABLE PAGE
+      sumUrlPagePlanets: (numberPlanets)=>{
+        const storeSum = getStore()
+        const newNumber = storeSum.pagePlanets + numberPlanets
+        console.log("Nuevo número de página sumado:", newNumber)
+        setStore( { pagePlanets: newNumber } )
+      }, 
+      
+      //FUNCION PARA RESTAR LA VARIABLE PAGE
+      restaUrlPagePlanets: (numberPlanets)=>{
+        const storeResta = getStore()
+        const newNumber2 = storeResta.pagePlanets - numberPlanets
+        console.log("Nuevo número de página restado:", newNumber2)
+        setStore( {pagePlanets: newNumber2} )
+      },
     },
     
   };

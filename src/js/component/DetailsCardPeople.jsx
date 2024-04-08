@@ -63,12 +63,12 @@ export const DetailsCardPeople = () => {
             </div>
         </div>
     ) : (
-        <div className='text-center'>
+        <div className='text-center mt-5 mb-5'>
             <div className="spinner-border text-warning" role="status">
                 <span className="visually-hidden">Loading...</span>
 
             </div>
-            <p className='text-warning'>Cargando, por favor espere...</p>
+            <p className='text-warning'>Cargando, People...</p>
         </div>
     )
 }
