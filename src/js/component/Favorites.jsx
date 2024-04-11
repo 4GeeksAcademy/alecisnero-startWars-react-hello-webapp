@@ -19,7 +19,7 @@ const Favorites = () => {
                                         <div className='d-flex justify-content-between align-items-center bg-dark pe-1 ps-1 pt-2 pb-2 rounded-2'>
                                             <div className='me-5 fs-5 text-white'>{item}</div>
                                             <div>
-                                                <button onClick={ ()=>{actions.deleteFavorite(index)} } className='btn btn-secondary fs-2 d-flex justify-content-between align-items-center'
+                                                <button onClick={ ()=>{actions.deleteFavorite(index)} } className='btnIcon btn btn-secondary fs-2 d-flex justify-content-between align-items-center'
                                                 style={{width: '80%', height: '80%'}}>
                                                     <TiDeleteOutline />
                                                 </button>

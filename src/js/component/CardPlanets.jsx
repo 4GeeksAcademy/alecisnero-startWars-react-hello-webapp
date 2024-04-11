@@ -15,7 +15,7 @@ const CardPlanets = () => {
     //FUNCION HANDLER PARA GUARDAR LA URL
     async function handlerGetUrlUnicPlanets(url, index) {
 
-        navigate(`/detail/${index}`)
+        navigate(`/detailPlanets/${index}`)
         try {
             await actions.getDetailPlanets(url)
         } catch (err) {

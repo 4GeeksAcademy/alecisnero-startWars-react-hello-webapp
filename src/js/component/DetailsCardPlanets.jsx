@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Context } from '../store/appContext'
 
-export const DetailsCardPeople = () => {
+export const DetailsCardPlanets = () => {
     const { store, actions } = useContext(Context)
+
+    console.log(store.listDetailsPlanets)
     
     return (!store.spinner) ? (
 
@@ -10,13 +12,13 @@ export const DetailsCardPeople = () => {
         style={{ backgroundColor: 'rgb(25, 25, 25, 0.9)' }}>
             <div className='d-flex row mb-3 pb-3 border-bottom border-warning'>
                 <div className='col-4'>
-                    <img className='rounded' src={`https://starwars-visualguide.com/assets/img/characters/${store.listDetailsPeople.uid}.jpg`} alt={`imagen_${store.listDetailsPeople.properties.name}`} />
+                    <img className='rounded' src={`https://starwars-visualguide.com/assets/img/planets/${store.listDetailsPlanets.uid}.jpg`} alt={`imagen_${store.listDetailsPlanets.properties.name}`} />
                 </div>
                 <div className='col-8'>
                     <h1 className='text-warning'>
-                        {store.listDetailsPeople.properties.name}
+                        {store.listDetailsPlanets.properties.name}
                     </h1>
-                    <p className='text-white'>
+                    <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas unde, nemo dicta blanditiis illo vitae veritatis expedita laudantium voluptates reiciendis tempore molestiae ratione repudiandae cum explicabo aperiam voluptate vel accusantium.
                     </p>
                 </div>
@@ -26,7 +28,7 @@ export const DetailsCardPeople = () => {
                     <h5>Name</h5>
                 </div>
                 <div className='col-2 border-end border-warning'>
-                    <h5>Birth Year</h5>
+                    <h5>birth Year</h5>
                 </div>
                 <div className='col-2 border-end border-warning'>
                     <h5>Gender</h5>
@@ -43,22 +45,22 @@ export const DetailsCardPeople = () => {
             </div>
             <div className='row text-center'>
                 <div className='col-2 border-end border-warning'>
-                    <p>{store.listDetailsPeople.properties.name}</p>
+                    <p>{store.listDetailsPlanets.properties.name}</p>
                 </div>
                 <div className='col-2 border-end border-warning'>
-                    <p>{store.listDetailsPeople.properties.birth_year}</p>
+                    <p>{store.listDetailsPlanets.properties.birth_year}</p>
                 </div>
                 <div className='col-2 border-end border-warning'>
-                    <p>{store.listDetailsPeople.properties.gender}</p>
+                    <p>{store.listDetailsPlanets.properties.gender}</p>
                 </div>
                 <div className='col-2 border-end border-warning'>
-                    <p>{store.listDetailsPeople.properties.height}</p>
+                    <p>{store.listDetailsPlanets.properties.height}</p>
                 </div>
                 <div className='col-2 border-end border-warning'>
-                    <p>{store.listDetailsPeople.properties.skin_color}</p>
+                    <p>{store.listDetailsPlanets.properties.skin_color}</p>
                 </div>
                 <div className='col-2'>
-                    <p>{store.listDetailsPeople.properties.eye_color}</p>
+                    <p>{store.listDetailsPlanets.properties.eye_color}</p>
                 </div>
             </div>
         </div>
@@ -68,7 +70,7 @@ export const DetailsCardPeople = () => {
                 <span className="visually-hidden">Loading...</span>
 
             </div>
-            <p className='text-warning'>Cargando, People...</p>
+            <p className='text-warning'>Cargando, Planets...</p>
         </div>
     )
 }

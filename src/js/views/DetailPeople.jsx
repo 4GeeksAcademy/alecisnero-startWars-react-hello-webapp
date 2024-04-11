@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { Context } from '../store/appContext'
+import { Context } from '../store/appContext.js'
 import { DetailsCardPeople } from '../component/DetailsCardPeople.jsx'
 
-export const Detail = () => {
+export const DetailPeople = () => {
 
     const { store, actions } = useContext(Context)
 
