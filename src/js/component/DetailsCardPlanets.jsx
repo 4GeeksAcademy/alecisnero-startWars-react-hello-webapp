@@ -15,8 +15,11 @@ export const DetailsCardPlanets = () => {
                     <img className='rounded' src={`https://starwars-visualguide.com/assets/img/planets/${store.listDetailsPlanets.uid}.jpg`} alt={`imagen_${store.listDetailsPlanets.properties.name}`} />
                 </div>
                 <div className='col-8'>
+                    <div>
+                        <p className='text-center'>{store.listDetailsPlanets.uid}</p>
+                    </div>
                     <h1 className='text-warning'>
-                        {store.listDetailsPlanets.properties.name}
+                        <p className='text-center'>{store.listDetailsPlanets.properties.name}</p>
                     </h1>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas unde, nemo dicta blanditiis illo vitae veritatis expedita laudantium voluptates reiciendis tempore molestiae ratione repudiandae cum explicabo aperiam voluptate vel accusantium.
@@ -25,42 +28,42 @@ export const DetailsCardPlanets = () => {
             </div>
             <div className='row mt-3 text-center text-warning'>
                 <div className='col-2 border-end border-warning'>
-                    <h5>Name</h5>
+                    <h5>Climate</h5>
                 </div>
                 <div className='col-2 border-end border-warning'>
-                    <h5>birth Year</h5>
+                    <h5>Diameter</h5>
                 </div>
                 <div className='col-2 border-end border-warning'>
-                    <h5>Gender</h5>
+                    <h5>Gravity</h5>
                 </div>
                 <div className='col-2 border-end border-warning'>
-                    <h5>Height</h5>
+                    <h5>Orbital</h5>
                 </div>
                 <div className='col-2 border-end border-warning'>
-                    <h5>Skin Color</h5>
+                    <h5>Rotation</h5>
                 </div>
                 <div className='col-2'>
-                    <h5>Eye Color</h5>
+                    <h5>Population</h5>
                 </div>
             </div>
             <div className='row text-center'>
-                <div className='col-2 border-end border-warning'>
-                    <p>{store.listDetailsPlanets.properties.name}</p>
+            <div className='col-2 border-end border-warning'>
+                    <p>{store.listDetailsPlanets.properties.climate}</p>
                 </div>
                 <div className='col-2 border-end border-warning'>
-                    <p>{store.listDetailsPlanets.properties.birth_year}</p>
+                    <p>{store.listDetailsPlanets.properties.diameter}</p>
                 </div>
                 <div className='col-2 border-end border-warning'>
-                    <p>{store.listDetailsPlanets.properties.gender}</p>
+                    <p>{store.listDetailsPlanets.properties.gravity}</p>
                 </div>
                 <div className='col-2 border-end border-warning'>
-                    <p>{store.listDetailsPlanets.properties.height}</p>
+                    <p>{store.listDetailsPlanets.properties.orbital_period}</p>
                 </div>
                 <div className='col-2 border-end border-warning'>
-                    <p>{store.listDetailsPlanets.properties.skin_color}</p>
+                    <p>{store.listDetailsPlanets.properties.rotation_period}</p>
                 </div>
                 <div className='col-2'>
-                    <p>{store.listDetailsPlanets.properties.eye_color}</p>
+                    <p>{store.listDetailsPlanets.properties.population}</p>
                 </div>
             </div>
         </div>

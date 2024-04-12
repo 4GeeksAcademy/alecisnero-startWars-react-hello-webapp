@@ -41,6 +41,8 @@ video {
     background-color: rgb(40, 40, 40);
 }
 
+
+
 /*BOTONES*/
 .btnIcon{
     width: 50px;
@@ -50,7 +52,7 @@ video {
 
 .btnFav{
     padding: 10px 30px 10px 30px;
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(40, 40, 40);
     border: none ;
     border-radius: 20px;
     color: #FFC107;
@@ -58,20 +60,21 @@ video {
 }
 
 .btnFav:hover{
-    background-color: rgb(40, 40, 40);
+    border: 0.3px solid #FFC107;
 }
 
 .btnLearnMore{
     padding: 9px;
+    color: black;
     background-color: rgb(255, 255, 255);
-    border: 0.3px solid #FFC107 ;
+    border: 0.3px solid black ;
     border-radius: 20px;
-    color: #FFC107;
     font-size: 15px;
 }
 
 .btnLearnMore:hover{
     background-color: rgb(0, 0, 0);
+    color: #FFC107;
     border: none;
 }
 
@@ -133,4 +136,15 @@ video {
 .navbarEdit{
     margin-left: 0.5%;
     width: 99%;
+}
+
+.editAnchor{
+    color: #FFC107;
+    text-decoration: none;
+}
+
+.editAnchor:hover{
+    border: 0.3px solid #FFC107;
+    padding: 0 100px 0 100px ;
+    border-radius: 50px;
 }

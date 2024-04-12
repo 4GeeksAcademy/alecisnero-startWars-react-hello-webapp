@@ -33,17 +33,17 @@ const CardPeople = () => {
             <div className='d-flex rounded-pill mb-5 p-1 mt-5 bg-dark'>
                 <div className='col-3 d-flex align-items-center'>
                     <span className='bg-warning rounded-pill text-dark border-0 ps-3 pe-3'>
-                        <p className='fs-4 d-inline-flex mt-2 mb-2 ms-5 me-5'>Home</p>
+                        <p className='fs-4 d-inline-flex mt-2 mb-2 ms-5 me-5' id='people'>Home</p>
                     </span>
                 </div>
                 <div className='col text-end me-5'>
-                    <h1 className='text-warning titlePeople'>Characters</h1>
+                    <h1 className='text-warning titlePeople'>Character</h1>
                 </div>
             </div>
 
             {/*    CARGA DE PEOPLE    */}
             { 
-                (!store.spinner) ?  <div className='d-flex' style={{ overflow: "auto" }}>
+                (!store.spinnerPeople) ?  <div className='d-flex' style={{ overflow: "auto" }}>
 
                 {store.listPeople.map((element, index) => {
                     return (
@@ -51,7 +51,7 @@ const CardPeople = () => {
                         style={{width: '14rem'}}>
                             <div >
                                 <img src={`https://starwars-visualguide.com/assets/img/characters/${element.uid}.jpg`}
-                                    className='card-img-top rounded-5'
+                                    className='card-img-top rounded-5 border border-white' 
                                     
                                 />
                             </div>
@@ -62,13 +62,16 @@ const CardPeople = () => {
                                         style={{backgroundColor: '#FFC107'}}>
                                         <span >{element.uid}</span>
                                     </div> 
-                                    <div className='col d-flex justify-content-center align-items-center'>
-                                        <h5 className='iconName'>{element.name}</h5>
+                                    <div className='col d-flex justify-content-center align-items-end'>
+                                        <h5 className='iconName my-auto mx-auto'>{element.name}</h5>
                                     </div>
                                     
                                 </div>
 
-                                <DescriptionPeople name={element.name} />
+                                <div className='my-1 mb-5'>
+                                   <DescriptionPeople name={element.name} /> 
+                                </div>
+                                
 
                                 <div className='d-flex justify-content-between'>
 

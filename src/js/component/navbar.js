@@ -27,38 +27,39 @@ export const Navbar = () => {
         <div className=" dropdown">
               <button
                 type="button"
-                className="btnFav dropdown-toggle"
-                data-bs-toggle="dropdown text-center"
+                className="btnFav dropdown-toggle text-center"
+                data-bs-toggle="dropdown"
                 aria-expanded="false"
+                data-bs-auto-close="true"
           
               >
                 Favorites <span className={`badge text-bg-${store.favorite.length == 0 ? 'secondary' : 'danger'}`}>{store.favorite.length}</span>
               </button>
-
+              
               <Favorites />
           </div>
        
 
       </div>
-      <div className="row mt-3 ms-1 me-1 rounded-pill text-warning text-center"
+      <div className="row mt-3 ms-1 me-1 rounded-pill text-warning text-center fs-3 my-auto"
           style={{ backgroundColor: 'rgb(25, 25, 25, 0.8)' }}>
           <div className="col-2 ">
-              Character
+              <a className="editAnchor" href="#people">Character</a>
           </div>
           <div className="col-2 ">
-              Films
+              <a className="editAnchor" href="#">Films</a>
           </div>
           <div className="col-2 ">
-              Planets
+              <a className="editAnchor" href="#planets">Planets</a>
           </div>
           <div className="col-2 ">
-              Species
+              <a className="editAnchor" href="#">Species</a>
           </div>
           <div className="col-2 ">
-              StarShips
+              <a className="editAnchor" href="#">StarShips</a>
           </div>
           <div className="col-2 ">
-              Vehicles
+              <a className="editAnchor" href="#">Vehicles</a>
           </div>
          
         

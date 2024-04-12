@@ -5,7 +5,7 @@ const DescriptionPeople = ({ name }) => {
     const { store, actions } = useContext(Context)
 
 
-    return (store.spinner2) ? (
+    return (store.spinner) ? (
         <div>
             {store.listAnyThingsPeople.map((ele, idx) =>
                 (name === ele.name) ? (

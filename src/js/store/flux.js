@@ -8,9 +8,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       pagePeople: 1,
       pagePlanets: 1,
       
-      spinner: null,
+      spinner: false,
 
-      spinner2: true,
+      spinnerPeople: null,
+      spinnerPlanets: null,
 
       listPeople: [],
       listPlanets: [],
@@ -26,6 +27,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     actions: {
       //FUNCION PARA OBTENER PERSONAJES
       getListPeople: async () => {
+        getActions().spinnerPeople(true);
         getActions().spinner(true);
         const storeCurrent = getStore();
         
@@ -39,8 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             setStore({ ...storeCurrent, listPeople: dataListPeople.results });
 
-            //PRUEBAS
-            getActions().spinner2(false)
+            
             const arrayPeoplePromises = dataListPeople.results.map(async (element) => {
               const resArray = await fetch(element.url);
               if (resArray.ok) {
@@ -64,15 +65,16 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Se ha presentado un ERROR: ", error);
           alert("Se ha presentado un ERROR: ", error);
         } finally {
-          getActions().spinner(false);
-          getActions().spinner2(true)
+          getActions().spinnerPeople(false);
+          getActions().spinner(true)
         }
       },
       
       getListPlanets: async () => {
         getActions().spinner(true);
         const storePlanets = getStore();
-        
+        getActions().spinnerPlanets(true)
+        getActions().spinner(false);
         setStore( {...storePlanets, listPlanets: [] } )
 
         try {
@@ -82,10 +84,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             const dataListPlanets = await resListPlanets.json();
 
             setStore({ ...storePlanets, listPlanets: dataListPlanets.results });
-            dataListPlanets.results
+            
 
-            //PRUEBAS
-            getActions().spinner2(false)
+            
+            
             const arrayPlanetsPromises = dataListPlanets.results.map(async (element) => {
               const resArray = await fetch(element.url);
               if (resArray.ok) {
@@ -109,14 +111,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Se ha presentado un ERROR: ", error);
           alert("Se ha presentado un ERROR: ", error);
         } finally {
-          getActions().spinner(false);
-          getActions().spinner2(true)
+          getActions().spinner(true);
+          getActions().spinnerPlanets(false)
         }
       },
 
       //FUNCION PARA OBTENER SIGUIENTES PERSONAJES
       getNextPeople: async () => {
         const store = getStore()
+        getActions().spinnerPeople(true);
         getActions().spinner(true);
         getActions().sumUrlPagePeople(store.pagePeople)
         getActions().getListPeople()
@@ -132,12 +135,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         }catch(err){
           alert('Se ha presentando un error: ', err)
         }finally{
+          getActions().spinnerPeople(false);
           getActions().spinner(false);
         }
       },
 
       getNextPlanets: async () => {
         const store = getStore()
+        getActions().spinnerPlanets(true);
         getActions().spinner(true);
         getActions().sumUrlPagePlanets(store.pagePlanets)
         getActions().getListPlanets()
@@ -153,6 +158,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }catch(err){
           alert('Se ha presentando un error: ', err)
         }finally{
+          getActions().spinnerPlanets(false);
           getActions().spinner(false);
         }
       },
@@ -160,7 +166,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       //FUNCION PARA OBTENER PREVIOUS PERSONAJES
       getPreviousPeople: async () => {
         const storePrevious = getStore()
-        getActions().spinner(true)
+        getActions().spinnerPeople(true)
+        getActions().spinner(true);
         getActions().restaUrlPagePeople(storePrevious.pagePeople)
         getActions().getListPeople()
         setStore( {...storePrevious, listPeople: []} )
@@ -174,12 +181,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         }catch(err){
           alert('Se ha presentado un error: ', err)
         }finally{
-          getActions().spinner(false)
+          getActions().spinnerPeople(false)
+          getActions().spinner(false);
         }
       },
       getPreviousPlanets: async () => {
         const storePrevious = getStore()
-        getActions().spinner(true)
+        getActions().spinnerPlanets(true)
+        getActions().spinner(true);
         getActions().restaUrlPagePlanets(storePrevious.pagePlanets)
         getActions().getListPlanets()
         setStore( {...storePrevious, listPlanets: []} )
@@ -193,22 +202,24 @@ const getState = ({ getStore, getActions, setStore }) => {
         }catch(err){
           alert('Se ha presentado un error: ', err)
         }finally{
-          getActions().spinner(false)
+          getActions().spinnerPlanets(false)
+          getActions().spinner(false);
         }
       },
 
       //FUNCION PARA OBTENER LA DATA DE CADA PERSONAJE
       getDetailPeople: async (url)=>{
         const store = getStore()
-        getActions().spinner(true)
+        getActions().spinner(true);
         try{
           const resListDetailsPeople = await fetch(url)
           const dataListDetailsPeople = await resListDetailsPeople.json()
           setStore( {...store, listDetailsPeople: dataListDetailsPeople.result} )
+          console.log(dataListDetailsPeople)
         }catch(err){
           alert('Ha ocurrido un erro: ', err)
         }finally{
-          getActions().spinner(false)
+          getActions().spinner(false);
         }
       },
 
@@ -223,7 +234,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }catch(err){
           alert('Ha ocurrido un erro: ', err)
         }finally{
-          getActions().spinner(false)
+          getActions().spinner(false);
         }
       },
 
@@ -253,9 +264,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       //SEGUNDO SPINNER ROJO
-      spinner2: (boolean2) => {
+      spinnerPeople: (boolean2) => {
         const store = getStore()
-        setStore({ ...store, spinner2: boolean2})
+        setStore({ ...store, spinnerPeople: boolean2})
+      },
+
+      spinnerPlanets: (boolean2) => {
+        const store = getStore()
+        setStore({ ...store, spinnerPlanets: boolean2})
       },
 
       //FUNCION PARA SUMA LA VARIABLE PAGE

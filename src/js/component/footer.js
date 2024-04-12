@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 
 const Footer = () => (
-  <footer className="footer mt-auto text-center text-white ">
-    <div className="bg-dark" 
+  <footer className="footer  text-center text-white ">
+    <div className="bg-dark my-5" 
       style={{height: '300px'}}>
-      <p>
-        Made with <i className="fa fa-heart text-danger" /> by{" "}
-        <a href="http://www.4geeksacademy.com">4Geeks Academy</a>
+      <h1 className="display-3">STAR WARS</h1>
+      <p className="mt-5">
+        Made with <i className="fa fa-heart text-danger" /> by Alejandro Cisnero
       </p>
+      <h6>Copyright.  | Derechos Reservados.</h6>
     </div>
   </footer>
 );

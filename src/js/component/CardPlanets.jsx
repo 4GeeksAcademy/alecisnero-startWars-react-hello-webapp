@@ -2,7 +2,9 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { Context } from '../store/appContext'
 import { FaRegHeart } from "react-icons/fa6";
+import { GoHomeFill } from "react-icons/go";
 import DescriptionPlanets from './DescriptionPlanets.jsx';
+import { BsDisplay } from 'react-icons/bs';
 
 const CardPlanets = () => {
     const { store, actions } = useContext(Context)
@@ -25,34 +27,60 @@ const CardPlanets = () => {
 
 
 
-    return (!store.spinner) ? (
+    return (
         <div
-            className='p-3 rounded'
+            className='p-3 rounded m-5'
             style={{ backgroundColor: 'rgb(25, 25, 25, 0.8)' }}>
-            <h2 className='text-danger text-start mb-3'>Planets</h2>
-            <div className='d-flex' style={{ overflow: "auto" }}>
+            <div className='d-flex rounded-pill mb-5 p-1 mt-5 bg-dark'>
+                <div className='col-3 d-flex align-items-center'>
+                    <span className='bg-warning rounded-pill text-dark border-0 ps-3 pe-3'>
+                        <p className='fs-4 d-inline-flex mt-2 mb-2 ms-5 me-5' id='planets'>Home</p>
+                    </span>
+                </div>
+                <div className='col text-end me-5'>
+                    <h1 className='text-warning titlePeople'>Planets</h1>
+                </div>
+            </div>
+
+            {/*    CARGA DE PLANETS    */}
+            { 
+                (!store.spinnerPlanets) ?  <div className='d-flex ' style={{ overflow: "auto" }}>
 
                 {store.listPlanets.map((element, index) => {
                     return (
-                        <div key={index} className='card col-xxl-3 col-xl-3 col-lg-4 col-md-5 col-sm-12 me-3'
-                            style={{width: '14rem'}}>
+                        <div key={index} className='card border-0 rounded-5 text-white bg-dark col-xxl-3 col-xl-3 col-lg-4 col-md-5 col-sm-12 me-3'
+                        style={{width: '14rem', height: '530px'}}>
                             <div >
                                 <img src={`https://starwars-visualguide.com/assets/img/planets/${element.uid}.jpg`}
-                                    className='card-img-top'
+                                    className='card-img-top rounded-5 border border-white' /* alt={`imagen_${element.name}`} */
+                                    
                                 />
                             </div>
                             <div className='card-body'>
-                                <h5>{element.name}</h5>
+                                <div className='d-flex cajaIcon rounded-pill d-flex justify-content-center align-items-center'>
+                                    
+                                    <div className='col-1 iconId d-flex justify-content-center align-items-center'
+                                        style={{backgroundColor: '#FFC107'}}>
+                                        <span >{element.uid}</span>
+                                    </div> 
+                                    <div className='col d-flex justify-content-center align-items-center'>
+                                        <h5 className='iconName my-auto mx-auto'>{element.name}</h5>
+                                    </div>
+                                    
+                                </div>
 
-                                <DescriptionPlanets name={element.name} />
+                                <div className='my-1'>
+                                    <DescriptionPlanets name={element.name} />
+                                </div>
+                                
 
                                 <div className='d-flex justify-content-between'>
 
-                                    <button className='btn btn-outline-primary'
+                                    <button className='btnLearnMore position-absolute bottom-0 start-0 ms-3 mb-3'
                                         onClick={() => { handlerGetUrlUnicPlanets(element.url, element.uid) }}>Learn more...</button>
 
                                     <button
-                                        className='btn btn-warning'
+                                        className='btnIconHearth position-absolute bottom-0 end-0 me-3 mb-3'
                                         onClick={() => { actions.addFavorite(element.name) }}><FaRegHeart /></button>
                                 </div>
                             </div>
@@ -61,23 +89,39 @@ const CardPlanets = () => {
 
                     )
                 })}
-            </div>
+            </div> 
+            
+            : <div className='text-center mt-5 mb-5 bg-dark rounded-2 p-5'>
+                <div className='p-5'>
+                    <div className="spinner-border text-warning" role="status">
+                        <span className="visually-hidden">Loading...</span>
 
-            <div className='text-center'>
-                <button className='btn btn-outline-light mt-3 me-3' onClick={() => { actions.getPreviousPlanets() }}>Previous</button>
-
-                <button className='btn btn-outline-light mt-3' onClick={() => { actions.getNextPlanets() }}>Next</button>
-            </div>
-        </div>
-    ) : (
-        <div className='text-center mt-5 mb-5'>
-            {store.spinner && <div>
-                <div className="spinner-border text-warning" role="status">
-                    <span className="visually-hidden">Loading...</span>
-
+                    </div>
+                    <p className='text-warning'>Cargando, Planets...</p>
                 </div>
-                <p className='text-warning'>Cargando, Planets...</p>
-            </div>}
+            </div>
+            }
+           
+
+            <div className='row rounded-pill mt-5 mb-5 bg-dark cajaBtn'>
+                <div className='col-4 text-start'>
+                    <button className='bg-warning rounded-pill ms-5 me-5 mt-2 ps-5 pe-5 pt-1 pb-1 border-0' onClick={() => { actions.getPreviousPlanets() }}>
+                        <p className='fs-3 d-inline-flex mt-0 mb-0'>Previous</p>
+                    </button>
+                </div>
+
+                <div className='col-4  text-center'>
+                    <button className='bg-warning iconHome'>
+                        <p className='d-inline-flex fs-2 ps-3 pe-3 pt-3'><GoHomeFill /></p>
+                    </button>
+                </div>
+
+                <div className='col-4  text-end'>
+                    <button className='bg-warning rounded-pill ms-5 me-5 mt-2 ps-5 pe-5 pt-1 pb-1 border-0' onClick={() => { actions.getNextPlanets() }}>
+                        <p className='fs-3 d-inline-flex mt-0 mb-0'>Next</p>
+                    </button>
+                </div>
+            </div>
         </div>
     )
 }
