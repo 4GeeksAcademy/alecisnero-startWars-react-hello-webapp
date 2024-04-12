@@ -63,7 +63,7 @@ export const DetailsCardPeople = () => {
             </div>
         </div>
     ) : (
-        <div className='text-center mt-5 mb-5'>
+        <div className='text-center mt-5 mb-5 bg-dark rounded-2 p-5 mx-5'>
             <div className="spinner-border text-warning" role="status">
                 <span className="visually-hidden">Loading...</span>
 

@@ -46,7 +46,7 @@ export const DetailsCardPlanets = () => {
                     <h5>Population</h5>
                 </div>
             </div>
-            <div className='row text-center'>
+            <div className='row'>
             <div className='col-2 border-end border-warning'>
                     <p>{store.listDetailsPlanets.properties.climate}</p>
                 </div>
@@ -68,7 +68,7 @@ export const DetailsCardPlanets = () => {
             </div>
         </div>
     ) : (
-        <div className='text-center mt-5 mb-5'>
+        <div className='text-center mt-5 mb-5 bg-dark rounded-2 p-5 mx-5'>
             <div className="spinner-border text-warning" role="status">
                 <span className="visually-hidden">Loading...</span>
 

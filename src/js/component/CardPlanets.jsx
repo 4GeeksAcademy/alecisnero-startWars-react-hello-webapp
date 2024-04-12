@@ -28,13 +28,13 @@ const CardPlanets = () => {
 
 
     return (
-        <div
+        <div id='planets'
             className='p-3 rounded m-5'
             style={{ backgroundColor: 'rgb(25, 25, 25, 0.8)' }}>
             <div className='d-flex rounded-pill mb-5 p-1 mt-5 bg-dark'>
                 <div className='col-3 d-flex align-items-center'>
                     <span className='bg-warning rounded-pill text-dark border-0 ps-3 pe-3'>
-                        <p className='fs-4 d-inline-flex mt-2 mb-2 ms-5 me-5' id='planets'>Home</p>
+                        <p className='fs-4 d-inline-flex mt-2 mb-2 ms-5 me-5' >Home</p>
                     </span>
                 </div>
                 <div className='col text-end me-5'>
